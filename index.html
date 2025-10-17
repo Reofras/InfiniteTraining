@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+
+    <title>Treino Infinito</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="game-container">
+  <h1>Treino Infinito</h1>
+  <!-- Botão de engrenagem -->
+  <button id="settings-btn" title="Configurações">⚙️</button>
+
+  <!-- Modal de configurações -->
+  <div id="settings-modal" class="hidden">
+    <div class="modal-content">
+      <h2>Configurações</h2>
+      <button id="delete-progress-btn">Deletar Progresso</button>
+
+      <div id="confirm-step1" class="hidden">
+        <p>Tem certeza? Digite <strong>SIM</strong> para continuar:</p>
+        <input type="text" id="confirm-input1" placeholder="Digite aqui..." />
+        <button id="confirm-btn1">Confirmar</button>
+      </div>
+
+      <div id="confirm-step2" class="hidden">
+        <p>Para confirmar, digite <strong>DELETAR</strong>:</p>
+        <input type="text" id="confirm-input2" placeholder="Digite DELETAR..." />
+        <button id="confirm-btn2">Apagar Tudo</button>
+      </div>
+
+      <button id="close-settings">Fechar</button>
+    </div>
+  </div>
+
+  <div id="main-layout">
+    <!-- Coluna esquerda -->
+    <div id="left-panel">
+      <div id="esforco-display">Esforço Físico: 0</div>
+
+      <div id="status-panel">
+        <h2>Status</h2>
+        <div id="status-list">
+          <p>Vida: <span id="status-vida">0</span></p>
+          <p>Força: <span id="status-forca">0</span></p>
+          <p>Tenacidade: <span id="status-tenacidade">0</span></p>
+          <p>Velocidade: <span id="status-velocidade">0</span></p>
+          <p>Intelecto: <span id="status-intelecto">0</span></p>
+          <p class="locked">???</p>
+        </div>
+      </div>
+
+      <div id="train-container">
+        <button id="train-btn">Treinar</button>
+        <div id="progress-bar">
+          <div id="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coluna direita -->
+    <div id="right-panel">
+        <!-- ABA 1: Atributos -->
+        <div id="stats-container" class="hidden">
+            <h2>Atributos</h2>
+            <div class="stat">
+            <span>Força: <span id="forca-nivel">1</span></span>
+            <button id="forca-btn">Aumentar (Custo: 3)</button>
+            </div>
+            <div class="stat">
+            <span>Durabilidade: <span id="durabilidade-nivel">1</span></span>
+            <button id="durabilidade-btn">Aumentar (Custo: 3)</button>
+            </div>
+            <div class="stat">
+            <span>Agilidade: <span id="agilidade-nivel">1</span></span>
+            <button id="agilidade-btn">Aumentar (Custo: 3)</button>
+            </div>
+        </div>
+
+        <!-- ABA 2: Habilidades -->
+        <div id="habilidades-container" class="hidden">
+            <h2>Habilidades</h2>
+            <div id="habilidades-list">
+            <div class="habilidade" id="hab-forca">
+                <h3>Poder Bruto</h3>
+                <p>Dobra todos os ganhos de força futuros.</p>
+                <button id="btn-hab-forca" disabled>Desbloqueie a Força nível 5</button>
+            </div>
+            <div class="habilidade" id="hab-durabilidade">
+                <h3>Corpo de Aço</h3>
+                <p>Dobra todos os ganhos de durabilidade futuros.</p>
+                <button id="btn-hab-durabilidade" disabled>Desbloqueie a Durabilidade nível 5</button>
+            </div>
+            <div class="habilidade" id="hab-agilidade">
+                <h3>Instinto Rápido</h3>
+                <p>Dobra todos os ganhos de agilidade futuros.</p>
+                <button id="btn-hab-agilidade" disabled>Desbloqueie a Agilidade nível 5</button>
+            </div>
+            </div>
+        </div>
+
+        <!-- 🔜 Futuras abas -->
+        <div id="tecnicas-container" class="hidden"></div>
+        <div id="energia-container" class="hidden"></div>
+        </div>
+
+
+      <!-- 🔽 NOVA ABA: Habilidades (oculta por padrão; sem lógica acoplada ainda) -->
+      <div id="habilidades-container" class="hidden">
+        <h2>Habilidades</h2>
+        <div id="habilidades-list">
+          <div class="habilidade" id="hab-forca">
+            <h3>Poder Bruto</h3>
+            <p>Dobra todos os ganhos de força futuros.</p>
+            <button id="btn-hab-forca" disabled>Desbloqueie a Força nível 5</button>
+          </div>
+
+          <div class="habilidade" id="hab-durabilidade">
+            <h3>Corpo de Aço</h3>
+            <p>Dobra todos os ganhos de durabilidade futuros.</p>
+            <button id="btn-hab-durabilidade" disabled>Desbloqueie a Durabilidade nível 5</button>
+          </div>
+
+          <div class="habilidade" id="hab-agilidade">
+            <h3>Instinto Rápido</h3>
+            <p>Dobra todos os ganhos de agilidade futuros.</p>
+            <button id="btn-hab-agilidade" disabled>Desbloqueie a Agilidade nível 5</button>
+          </div>
+        </div>
+      </div>
+      <!-- 🔼 FIM DA ABA HABILIDADES -->
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+body {
+    font-family: 'IM Fell English SC', Arial, serif;
+    background-color: #2e2a25;
+    color: #e3d9c2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* Contêiner principal do jogo */
+#game-container {
+    background-color: #433d35;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    
+    /* Proporção 16:9 responsiva */
+    aspect-ratio: 16 / 9;
+    width: 70vw;           /* ocupa 80% da largura da tela */
+    max-width: 1000px;     /* limite para monitores grandes */
+    min-width: 600px;      /* limite mínimo */
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+h1 {
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+}
+
+/* Estilo para todos os botões */
+button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer; /* Muda o cursor para uma "mãozinha" */
+    background-color: #7c3f2a;
+    color: #e3d9c2;
+    font-size: 16px;
+    margin-top: 5px;
+    transition: background-color 0.2s; /* Animação suave na cor de fundo */
+}
+
+
+button:hover {
+    background-color: #a67c52;
+}
+
+/* Estilo específico para o botão principal "Treinar" */
+#train-btn {
+    background-color: #007BFF; /* Azul para destacar */
+    font-size: 20px;
+    padding: 15px 30px;
+    margin: 20px 0;
+}
+
+#train-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para o display de esforço */
+#esforco-display {
+    font-weight: 600;
+    font-size: 22px;
+}
+
+/* Barra de progresso do treino */
+#progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+#progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #00ff88;
+    transition: width 0.1s linear;
+}
+
+/* Layout lateral */
+#train-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* move o botão para a esquerda */
+    padding-left: 30px;
+}
+
+/* Ocultar seções até desbloquear */
+.hidden {
+    display: none;
+}
+
+/* Pequeno ajuste visual no título e display */
+#esforco-display {
+    text-align: left;
+    margin-left: 5px;
+}
+/* Layout dividido em duas colunas */
+#main-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+/* Painel esquerdo (treino) */
+#left-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* move o botão pra esquerda */
+}
+
+/* Painel direito (atributos) */
+#right-panel {
+    flex: 1;
+}
+
+/* Oculta temporariamente */
+.hidden {
+    display: none;
+}
+
+/* Ajustes visuais */
+#train-btn {
+    align-self: flex-start;
+    margin-top: 20px;
+}
+
+
+#stats-container {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 500px;
+    
+}
+
+/* Título "Atributos" */
+#stats-container h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #00ff88;
+    margin-bottom: 15px;
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+}
+/* Cada bloco de atributo */
+.stat {
+    background-color: #3c372f;
+    border: 1px solid #564a40;
+    border-radius: 8px;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+/* Efeito ao passar o mouse */
+.stat:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+/* Texto do atributo (Força, Durabilidade, etc.) */
+.stat span:first-child {
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+/* Botões dos atributos */
+.stat button {
+    position: relative;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 150px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.stat button:hover {
+    background-color: #0062d1;
+    transform: scale(1.03);
+}
+
+/* Círculo do custo (E.F) */
+.stat button .cost {
+    background-color: #c9a26c;
+    color: #2e2a25;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    line-height: 1;
+}
+
+
+/* Realce visual no hover */
+.stat button:hover .cost {
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.9);
+    transform: scale(1.08);
+}
+
+
+@media (max-width: 700px) {
+    #game-container {
+        width: 95vw;
+        aspect-ratio: auto;
+        min-width: unset;
+        padding: 20px;
+    }
+
+    #train-container {
+        padding-left: 0;
+        align-items: center;
+    }
+
+    #stats-container {
+        max-width: 100%;
+    }
+}
+
+/* Bolinha de custo (E.F) */
+
+
+#train-container {
+    margin-right: 100px; /* aumenta distância lateral */
+}
+
+#stats-container {
+    margin-left: 100px; /* empurra a coluna da direita */
+}
+
+/* Botão da engrenagem */
+#settings-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 26px;
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+#settings-btn:hover {
+    color: #00ff88;
+    transform: scale(1.1);
+}
+
+/* Modal geral */
+#settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Caixa interna do modal */
+.modal-content {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
+    text-align: center;
+    width: 350px;
+    color: #e0e0e0;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.modal-content h2 {
+    color: #00ff88;
+    margin-bottom: 20px;
+}
+
+/* Inputs e botões do modal */
+.modal-content input {
+    width: 80%;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 8px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.modal-content button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 14px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
+}
+
+#settings-modal:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#status-panel {
+    background-color: #202020;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 255, 136, 0.3);
+    width: 300px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#status-panel h2 {
+    color: #00ff88;
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#status-list p {
+    margin: 4px 0;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.locked {
+    color: #555;
+    font-style: italic;
+}
