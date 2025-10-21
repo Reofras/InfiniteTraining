@@ -1,7 +1,7 @@
-import { esforco, atributos, ganharEsforco, gastarEsforco, salvarProgresso, carregarProgresso, resetarProgresso } from './state.js';
+import {verificarDesbloqueioHabilidades, comprarHabilidade, esforco, atributos, ganharEsforco, gastarEsforco, salvarProgresso, carregarProgresso, resetarProgresso } from './state.js';
 import { atualizarStatus } from './state.js';
 
-import { atualizarTela } from './ui.js';
+import { atualizarTela, atualizarHabilidadesUI} from './ui.js';
 let carregando = false;
 
 
@@ -13,7 +13,7 @@ function treinar() {
     progressBar.style.width = '0%';
 
     let progresso = 0;
-    const duracao = 5000;
+    const duracao = 200;
     const interval = 100;
     const incremento = 100 / (duracao / interval);
 
@@ -40,22 +40,36 @@ function treinar() {
 
 
 function comprarAtributo(nome) {
-    const attr = atributos[nome];
-    if (gastarEsforco(attr.custo)) {
-        attr.nivel++;
-        attr.custo = Math.floor(attr.custo * 1.5);
-        atualizarStatus();
-        atualizarTela();
-    } else {
-        alert("Esforço insuficiente!");
-    }
+  const attr = atributos[nome];
+  if (gastarEsforco(attr.custo)) {
+    attr.nivel++;
+    attr.custo = Math.floor(attr.custo * 1.5);
+    atualizarStatus();
+    verificarDesbloqueioHabilidades(); // <-- NOVA LINHA
+    atualizarTela();
+  } else {
+    alert("Esforço insuficiente!");
+  }
 }
+
 
 // Eventos
 document.getElementById('train-btn').addEventListener('click', treinar);
 document.getElementById('forca-btn').addEventListener('click', () => comprarAtributo('forca'));
 document.getElementById('durabilidade-btn').addEventListener('click', () => comprarAtributo('durabilidade'));
 document.getElementById('agilidade-btn').addEventListener('click', () => comprarAtributo('agilidade'));
+document.getElementById('btn-hab-forca').addEventListener('click', () => {
+  if (comprarHabilidade('forca')) atualizarHabilidadesUI();
+});
+
+document.getElementById('btn-hab-durabilidade').addEventListener('click', () => {
+  if (comprarHabilidade('durabilidade')) atualizarHabilidadesUI();
+});
+
+document.getElementById('btn-hab-agilidade').addEventListener('click', () => {
+  if (comprarHabilidade('agilidade')) atualizarHabilidadesUI();
+});
+
 
 
 // Autosave a cada 2 segundos
@@ -142,3 +156,4 @@ if (localStorage.getItem('atributosDesbloqueados') === 'true') {
 }
 
 atualizarTela();
+atualizarHabilidadesUI();
