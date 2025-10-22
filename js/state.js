@@ -1,3 +1,4 @@
+
 export let esforco = 0;
 export let atributosDesbloqueados = localStorage.getItem('atributosDesbloqueados') === 'true';
 export let habilidadesDesbloqueadas = localStorage.getItem('habilidadesDesbloqueadas') === 'true';
@@ -7,6 +8,12 @@ export const atributos = {
     durabilidade: { nivel: 1, custo: 3 },
     agilidade: { nivel: 1, custo: 3 }
 };
+
+let onHabilidadeDesbloqueada = null;
+export function setOnHabilidadeDesbloqueada(callback) {
+  onHabilidadeDesbloqueada = callback;
+}
+
 
 export const multiplicadores = {
   forca: 1,
@@ -144,28 +151,39 @@ export function verificarDesbloqueioHabilidades() {
   if (atributos.agilidade.nivel >= 5 && !habilidades.agilidade.desbloqueada) {
     habilidades.agilidade.desbloqueada = true;
   }
-
   salvarProgresso();
+  if (onHabilidadeDesbloqueada) onHabilidadeDesbloqueada();
 }
 
 export function comprarHabilidade(tipo) {
-  // custo dinâmico compartilhado entre todas as habilidades
   const custo = custoHabilidadeGlobal;
 
-  // verificação de pré-condições
-  if (!habilidades[tipo].desbloqueada || habilidades[tipo].ativa) return false;
-  if (esforco < custo) return false;
+  console.log("=== Tentando comprar habilidade:", tipo, "===");
+  console.log("Desbloqueada:", habilidades[tipo].desbloqueada);
+  console.log("Ativa:", habilidades[tipo].ativa);
+  console.log("Esforço atual:", esforco);
+  console.log("Custo necessário:", custo);
 
-  // custo pago
-  gastarEsforco(custo);
+  if (!habilidades[tipo].desbloqueada || habilidades[tipo].ativa) {
+    console.warn("⚠️ Falhou: habilidade não desbloqueada ou já ativa.");
+    return false;
+  }
+  if (esforco < custo) {
+    console.warn("⚠️ Falhou: esforço insuficiente.");
+    return false;
+  }
+  if (!gastarEsforco(custo)) {
+    console.warn("⚠️ Falhou: gastarEsforco retornou false.");
+    return false;
+  }
 
-  // aplicar efeito permanente
   habilidades[tipo].ativa = true;
-  multiplicadores[tipo] = 2; // dobra ganhos futuros
-
-  // custo global aumenta +5 para próxima compra
+  multiplicadores[tipo] = 2;
   custoHabilidadeGlobal += 5;
 
   salvarProgresso();
+  console.log("✅ Habilidade comprada com sucesso:", tipo);
   return true;
 }
+
+

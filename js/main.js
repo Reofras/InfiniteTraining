@@ -1,10 +1,10 @@
+console.log("Main.js carregado, elemento do botão:", document.getElementById('btn-hab-forca'));
 import {verificarDesbloqueioHabilidades, comprarHabilidade, esforco, atributos, ganharEsforco, gastarEsforco, salvarProgresso, carregarProgresso, resetarProgresso } from './state.js';
-import { atualizarStatus } from './state.js';
-
+import { atualizarStatus, setOnHabilidadeDesbloqueada } from './state.js';
 import { atualizarTela, atualizarHabilidadesUI} from './ui.js';
 let carregando = false;
 
-
+setOnHabilidadeDesbloqueada(atualizarHabilidadesUI);
 function treinar() {
     if (carregando) return;
     carregando = true;
@@ -45,12 +45,17 @@ function comprarAtributo(nome) {
     attr.nivel++;
     attr.custo = Math.floor(attr.custo * 1.5);
     atualizarStatus();
-    verificarDesbloqueioHabilidades(); // <-- NOVA LINHA
+    verificarDesbloqueioHabilidades();
+
+    // ✅ Atualiza a UI imediatamente após possível desbloqueio
+    atualizarHabilidadesUI();
+
     atualizarTela();
   } else {
     alert("Esforço insuficiente!");
   }
 }
+
 
 
 // Eventos
