@@ -38,23 +38,49 @@ export function atualizarTela() {
 }
 
 export function atualizarHabilidadesUI() {
-  // se nenhuma habilidade desbloqueada, oculta o container
+  // Verifica se existe ao menos UMA habilidade desbloqueada e ainda não ativa
   const algumaDesbloqueada = Object.values(habilidades).some(h => h.desbloqueada && !h.ativa);
   habilidadesContainer.classList.toggle('hidden', !algumaDesbloqueada);
 
-  // controle individual
-  habForca.classList.toggle('hidden', !habilidades.forca.desbloqueada || habilidades.forca.ativa);
-  habDurabilidade.classList.toggle('hidden', !habilidades.durabilidade.desbloqueada || habilidades.durabilidade.ativa);
-  habAgilidade.classList.toggle('hidden', !habilidades.agilidade.desbloqueada || habilidades.agilidade.ativa);
-    if (habilidades.forca.desbloqueada && !habilidades.forca.ativa) {
-        document.getElementById('btn-hab-forca').textContent = `Comprar (${custoHabilidadeGlobal} E.F)`;
-}
+  // === FORÇA ===
+  const btnForca = document.getElementById('btn-hab-forca');
+  if (habilidades.forca.desbloqueada && !habilidades.forca.ativa) {
+    habForca.classList.remove('hidden'); // mostra só se desbloqueada
+    btnForca.textContent = `Comprar (${custoHabilidadeGlobal} E.F)`;
+    btnForca.disabled = false;
+  } else {
+    habForca.classList.add('hidden'); // oculta se ainda bloqueada ou já ativa
+    btnForca.textContent = habilidades.forca.ativa
+      ? "Já ativada!"
+      : "Desbloqueie a Força nível 5";
+    btnForca.disabled = true;
+  }
 
-    if (habilidades.durabilidade.desbloqueada && !habilidades.durabilidade.ativa) {
-        document.getElementById('btn-hab-durabilidade').textContent = `Comprar (${custoHabilidadeGlobal} E.F)`;
-}
+  // === DURABILIDADE ===
+  const btnDur = document.getElementById('btn-hab-durabilidade');
+  if (habilidades.durabilidade.desbloqueada && !habilidades.durabilidade.ativa) {
+    habDurabilidade.classList.remove('hidden');
+    btnDur.textContent = `Comprar (${custoHabilidadeGlobal} E.F)`;
+    btnDur.disabled = false;
+  } else {
+    habDurabilidade.classList.add('hidden');
+    btnDur.textContent = habilidades.durabilidade.ativa
+      ? "Já ativada!"
+      : "Desbloqueie a Durabilidade nível 5";
+    btnDur.disabled = true;
+  }
 
-    if (habilidades.agilidade.desbloqueada && !habilidades.agilidade.ativa) {
-        document.getElementById('btn-hab-agilidade').textContent = `Comprar (${custoHabilidadeGlobal} E.F)`;
-}
+  // === AGILIDADE ===
+  const btnAgi = document.getElementById('btn-hab-agilidade');
+  if (habilidades.agilidade.desbloqueada && !habilidades.agilidade.ativa) {
+    habAgilidade.classList.remove('hidden');
+    btnAgi.textContent = `Comprar (${custoHabilidadeGlobal} E.F)`;
+    btnAgi.disabled = false;
+  } else {
+    habAgilidade.classList.add('hidden');
+    btnAgi.textContent = habilidades.agilidade.ativa
+      ? "Já ativada!"
+      : "Desbloqueie a Agilidade nível 5";
+    btnAgi.disabled = true;
+  }
 }
